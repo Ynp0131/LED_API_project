@@ -1,0 +1,6 @@
+../Core/Src/led_driver.c:15:5:LED_init	8	static
+../Core/Src/led_driver.c:23:5:LED_start	4	static
+../Core/Src/led_driver.c:28:5:LED_stop	4	static
+../Core/Src/led_driver.c:33:5:LED_set_pattern_num	16	static
+../Core/Src/led_driver.c:102:5:LED_set_pattern_bit	16	static
+../Core/Src/led_driver.c:124:6:LED_main	16	static

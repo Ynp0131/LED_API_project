@@ -1,0 +1,6 @@
+../Core/Src/led_driver.c:15:5:LED_init	1
+../Core/Src/led_driver.c:23:5:LED_start	1
+../Core/Src/led_driver.c:28:5:LED_stop	1
+../Core/Src/led_driver.c:33:5:LED_set_pattern_num	21
+../Core/Src/led_driver.c:102:5:LED_set_pattern_bit	3
+../Core/Src/led_driver.c:124:6:LED_main	9
