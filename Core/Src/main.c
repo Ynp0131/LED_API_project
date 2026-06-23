@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "led_driver.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -68,7 +67,11 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+LED_set_interval(200);
+LED_set_pattern_bit("1010010100110101", 16); //上位ビットから1つずつ読み取る
+LED_set_interval(250);
+LED_get_interval();
+LED_get_status();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -77,6 +80,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+
+  LED_init();
 
   /* USER CODE END Init */
 
@@ -91,7 +96,8 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  int button_state = 0;
+  int led_ctrl = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -99,16 +105,58 @@ int main(void)
 
   while (1)
   {
-    /* USER CODE END WHILE */
-	  LED_init();
+	  /* USER CODE END WHILE */
+	  // ============================
+	 if (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == 0)   // ボタン押された
+	 {
+		 if (button_state == 0)
+		 {
+			 button_state = 1;
+			 led_ctrl++;
 
-	  while(1)
-	  {
-		  LED_set_pattern_num(4);
-		  HAL_Delay(10);
-	  }
-    /* USER CODE BEGIN 3 */
+			 switch (led_ctrl)
+			 {
+			 case 1:
+
+				 LED_set_interval(100);   // 100ms
+				 LED_start();
+				 break;
+
+			 case 2:
+				 LED_set_pattern_num(2);
+				 LED_set_interval(500);   // 200ms
+				 LED_start();
+				 break;
+
+			 case 3:
+				 LED_set_pattern_num(3);
+				 LED_set_interval(500);
+				 LED_start();
+				 break;
+
+			 case 4:
+				 LED_set_pattern_num(4);
+				 LED_set_interval(250);
+				 LED_start();
+				 break;
+
+			 case 5:
+				 LED_stop();
+				 led_ctrl = 0;
+				 break;
+			 }
+		}
+	}
+	else{
+		if(button_state == 1){
+			button_state = 0;
+		}
+	}
+	LED_main();
+	HAL_Delay(10);
   }
+
+    /* USER CODE END WHILE */
   /* USER CODE END 3 */
 }
 

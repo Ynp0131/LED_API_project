@@ -12,6 +12,17 @@
 #include "stm32f4xx_hal_gpio.h"
 #include "stm32f4xx_hal.h"
 
+typedef struct{
+	int pattern_num;
+	char pattern[33];	//ビットパターン
+	char pattern_bit;	//読み取ったビットの中身（０or１）
+	int interval;		//何秒間隔で状態を読み取るか（カウントの目標値）
+	char status;		//1：ON状態、2:OFF状態
+	char F_running;		//1 : 動作状態  0 : 停止状態
+	char F_initialized; //初期化完了フラグ
+}variable;
+
+extern variable info;
 
 int LED_init();		//初期化 (戻り値 成功=1 , 失敗=0)
 int LED_start();	//点滅開始 (戻り値 成功=1 , 失敗=0)
@@ -36,9 +47,10 @@ int LED_set_pattern_bit(char* pattern, int size);
 
 int LED_set_interval(unsigned int msec);
 /*点滅間隔を設定(1以上,1000以下))
-戻り値 成功=1 , 失敗=0
-int LED_get_interval(int msec);
-点滅間隔の設定値取得
+戻り値 成功=1 , 失敗=0*/
+
+int LED_get_interval();
+/*点滅間隔の設定値取得
 戻り値 msec単位のinterval値 , 失敗=-1*/
 
 int LED_get_status();
